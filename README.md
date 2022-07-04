@@ -22,10 +22,10 @@ import { JSONURLs } from 'src/types';
 // set isTestMode to false when aamarpay in production
 const isTestMode = true;
 
-//For Testing Purpose, use following Store ID and Signature Key
-const storeId = 'aamarpay';
-const signatureKey = '28c78bb1f45112f5d40b956fe104645a';
-//For Production, use your Store ID and Signature Key (provided by aamarPay)
+//For Testing Purpose, use SANDBOX Store ID and Signature Key and
+//For Production, use your Store ID and Signature Key provided by aamarPay
+const storeId = '';
+const signatureKey = '';
 
 const jsonURLs: JSONURLs = {
   success_url: "https://www.example.com/success_url",
