@@ -1,6 +1,6 @@
 {
   "name": "react-native-aamarpay",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "react native library for aamarpay payment gateway",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
