@@ -36,9 +36,11 @@ const jsonURLs: JSONURLs = {
   cancel_url_suffix: "cancel_url",
 }
 
-const aamarPay = new AamarPay(storeId, signatureKey, isTestMode, jsonURLs);
+const aamarPay = new AamarPay(storeId, signatureKey, isTestMode);
 
 // ...
+
+await props.aamarPay.setJsonURLs(jsonURLs);
 
 const res = await aamarPay.onClickPayment(
   '10', //trxAmount = '10'

@@ -1,5 +1,5 @@
 export enum RejectCodes {
-  APIInitFailure = 'APIInitFailure',
+  SetURLsFailure = 'SetURLsFailure',
   PaymentInitFailure = 'PaymentInitFailure', 
   PaymentFailure = 'PaymentFailure', 
   PaymentProcessingFailure = 'PaymentProcessingFailure', 

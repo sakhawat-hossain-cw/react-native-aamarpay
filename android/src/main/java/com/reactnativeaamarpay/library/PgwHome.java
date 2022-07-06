@@ -72,10 +72,12 @@ public class PgwHome extends AppCompatActivity implements AdvancedWebView.Listen
             paymentSuccess = true;
             AsyncTrxVerification trxVerification = new AsyncTrxVerification();
             trxVerification.execute();
+            finish();
         } else if (url.contains(fail_url_suffix)) {
             paymentSuccess = false;
             AsyncTrxVerification trxVerification = new AsyncTrxVerification();
             trxVerification.execute();
+            finish();
         } else if (url.contains(cancel_url_suffux)) {
             listener.onPaymentCancel(createFailedMap("Payment cancelled by user."));
             finish();
@@ -158,13 +160,13 @@ public class PgwHome extends AppCompatActivity implements AdvancedWebView.Listen
                                     listener.onPaymentProcessingFailed(createFailedMap(e.getMessage()));
                                 }
                                 pgw_loading.setVisibility(View.GONE);
-                                finish();
+                                // finish();
                             }
                         });
                     } catch (Exception e) {
                         listener.onPaymentProcessingFailed(createFailedMap(e.getMessage()));
                         pgw_loading.setVisibility(View.GONE);
-                        finish();
+                        // finish();
                     }
                 }
             }
@@ -173,7 +175,7 @@ public class PgwHome extends AppCompatActivity implements AdvancedWebView.Listen
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 listener.onPaymentProcessingFailed(createFailedMap(e.getMessage()));
                 pgw_loading.setVisibility(View.GONE);
-                finish();
+                // finish();
             }
         });
     }

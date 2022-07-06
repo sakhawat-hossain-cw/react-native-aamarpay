@@ -18,10 +18,14 @@ const Aamarpay = NativeModules.Aamarpay
     );
 
 export class AamarPay {
-  constructor(storeId: string, signatureKey: string, isTestMode=true, jsonURLs: JSONURLs) {
+  constructor(storeId: string, signatureKey: string, isTestMode=true) {
+    Aamarpay.initAamarPay(storeId, signatureKey, isTestMode);
+  }
+
+  async setJsonURLs(jsonURLs: JSONURLs){
     try {
       const urls = JSON.stringify(jsonURLs);
-      Aamarpay.initAamarPay(storeId, signatureKey, isTestMode, urls);
+      await Aamarpay.setURLs(urls);
     } catch(e) {
       throw e;
     }

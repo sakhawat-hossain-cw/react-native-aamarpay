@@ -44,21 +44,27 @@ public class AamarpayModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void initAamarPay(String storeId, String signatureKey, boolean isTestMode, String urls, Promise promise){
+    public void initAamarPay(String storeId, String signatureKey, boolean isTestMode){
         this.storeId = storeId;
         this.signatureKey = signatureKey;
         this.isTestMode = isTestMode;
         // Initiate payment
+        activity = getCurrentActivity();
+        aamarPay = new AamarPay(this.context, storeId, signatureKey, activity);
+        // Set Test Mode
+        aamarPay.testMode(isTestMode);
+        // Auto generate Trx
+        aamarPay.autoGenerateTransactionID(true);
+    }
+
+    @ReactMethod
+    public void setURLs(String urls, Promise promise){
         try{
             JSONObject jsonURLs = new JSONObject(urls);
-            activity = getCurrentActivity();
-            aamarPay = new AamarPay(this.context, storeId, signatureKey, activity, jsonURLs);
-            // Set Test Mode
-            aamarPay.testMode(isTestMode);
-            // Auto generate Trx
-            aamarPay.autoGenerateTransactionID(true);
+            aamarPay.setJsonURLs(jsonURLs);
+            promise.resolve("Set URLs successfully");
         } catch(JSONException e) {
-            promise.reject("APIInitFailure", e.getMessage());
+            promise.reject("SetURLsFailure", e.getMessage());
         }
     }
 

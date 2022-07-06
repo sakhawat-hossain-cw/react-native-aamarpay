@@ -57,7 +57,7 @@ public class AamarPay {
     
     private Activity activity;
 
-    public AamarPay(Context context, String store_id, String signature_key, Activity activity, JSONObject jsonURLs) {
+    public AamarPay(Context context, String store_id, String signature_key, Activity activity) {
         // Set the context
         this.context = context;
         this.activity = activity;
@@ -65,7 +65,6 @@ public class AamarPay {
         // Setting store id, signature key and urls
         this.store_id = store_id;
         this.signature_key = signature_key;
-        this.jsonURLs = jsonURLs;
 
         // set null or default listener or accept as argument to constructor
         listener = null;
@@ -87,6 +86,11 @@ public class AamarPay {
         this.customerPhone = "";
         this.customerCity = "";
         this.customerCountry = "";
+    }
+
+    // Set json urls for success, fail and cancel
+    public void setJsonURLs(JSONObject jsonURLs){
+        this.jsonURLs = jsonURLs;
     }
 
     // Set if the library generate the transaction id itself
@@ -223,9 +227,15 @@ public class AamarPay {
             intent.putExtra("TRX_ID", trxID);
             intent.putExtra("STORE_ID", this.store_id);
             intent.putExtra("SIGNATURE_KEY", this.signature_key);
-            intent.putExtra("SUCCESS_URL_SUFFIX", this.jsonURLs.getString("success_url_suffix"));
-            intent.putExtra("FAIL_URL_SUFFIX", this.jsonURLs.getString("fail_url_suffix"));
-            intent.putExtra("CANCEL_URL_SUFFIX", this.jsonURLs.getString("cancel_url_suffix"));
+            if (jsonURLs == null) {
+                intent.putExtra("SUCCESS_URL_SUFFIX", "success_url");
+                intent.putExtra("FAIL_URL_SUFFIX", "fail_url");
+                intent.putExtra("CANCEL_URL_SUFFIX", "cancel_url");
+            } else {
+                intent.putExtra("SUCCESS_URL_SUFFIX", this.jsonURLs.getString("success_url_suffix"));
+                intent.putExtra("FAIL_URL_SUFFIX", this.jsonURLs.getString("fail_url_suffix"));
+                intent.putExtra("CANCEL_URL_SUFFIX", this.jsonURLs.getString("cancel_url_suffix"));
+            }
             activity.startActivityForResult(intent, 1000);
         } catch (JSONException e) {
             listener.onInitFailure(true, e.getMessage());
@@ -247,11 +257,17 @@ public class AamarPay {
             jsonObj_.put("amount", this.trxAmount);
             jsonObj_.put("tran_id", trxID);
             jsonObj_.put("currency", this.trxCurrency);
-            jsonObj_.put("success_url", this.jsonURLs.getString("success_url"));
-            jsonObj_.put("fail_url", this.jsonURLs.getString("fail_url"));
-            jsonObj_.put("cancel_url", this.jsonURLs.getString("cancel_url"));
             jsonObj_.put("desc", this.paymentDescription);
             jsonObj_.put("type", "json");
+            if (jsonURLs == null) {
+                jsonObj_.put("success_url", "https://www.example.com/success_url");
+                jsonObj_.put("fail_url", "https://www.example.com/fail_url");
+                jsonObj_.put("cancel_url", "https://www.example.com/cancel_url");
+            } else {
+                jsonObj_.put("success_url", this.jsonURLs.getString("success_url"));
+                jsonObj_.put("fail_url", this.jsonURLs.getString("fail_url"));
+                jsonObj_.put("cancel_url", this.jsonURLs.getString("cancel_url"));
+            }
 
             JsonParser jsonParser = new JsonParser();
             gsonObject = (JsonObject) jsonParser.parse(jsonObj_.toString());

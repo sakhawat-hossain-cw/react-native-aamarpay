@@ -21,7 +21,7 @@ const jsonURLs: JSONURLs = {
   cancel_url_suffix: "cancel_url",
 }
 
-const aamarPay = new AamarPay(storeId, signatureKey, isTestMode, jsonURLs);
+const aamarPay = new AamarPay(storeId, signatureKey, isTestMode);
 
 const Payment: React.FC<{
   aamarPay: AamarPay;
@@ -29,6 +29,11 @@ const Payment: React.FC<{
 }> = props => {
 
   const onClickPayment = async () => {
+    try {
+      await props.aamarPay.setJsonURLs(jsonURLs);
+    } catch(e: any){
+      Alert.alert(e?.code, e?.message);
+    }
     try {
       const res = await props.aamarPay.onClickPayment(
         '10', //trxAmount = '10'
