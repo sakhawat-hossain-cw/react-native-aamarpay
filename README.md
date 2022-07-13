@@ -1,6 +1,6 @@
 # react-native-aamarpay
 
-A react native library for aamarpay payment gateway. For more details visit [www.aamarpay.com](www.aamarpay.com)
+A react native library for aamarpay payment gateway. For more details visit [www.aamarpay.com](https://www.aamarpay.com)
 Currently this library only provide support to React Native on android.
 
 ## Installation
@@ -40,7 +40,7 @@ const aamarPay = new AamarPay(storeId, signatureKey, isTestMode);
 
 // ...
 
-await props.aamarPay.setJsonURLs(jsonURLs);
+await aamarPay.setJsonURLs(jsonURLs);
 
 const res = await aamarPay.onClickPayment(
   '10', //trxAmount = '10'
